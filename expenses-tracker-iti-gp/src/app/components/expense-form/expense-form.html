@@ -1,0 +1,28 @@
+<div class="row justify-content-center">
+  <div class="col-lg-7">
+    <div class="mb-4"><a routerLink="/expenses" class="text-decoration-none">← Back to expenses</a><h1 class="h2 fw-bold mt-3">{{ editingId() === null ? 'Add an expense' : 'Edit expense' }}</h1><p class="text-secondary">Keep your spending story up to date.</p></div>
+    <form class="card border-0 shadow-sm rounded-4" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="card-body p-4 p-md-5">
+        <div class="mb-3">
+          <label for="amount" class="form-label fw-semibold">Amount</label>
+          <div class="input-group"><span class="input-group-text">$</span><input id="amount" class="form-control" type="number" min="0.01" step="0.01" formControlName="amount"></div>
+          @if (form.controls.amount.invalid && form.controls.amount.touched) { <div class="text-danger small mt-1">Enter an amount greater than zero.</div> }
+        </div>
+        <div class="mb-3">
+          <label for="category" class="form-label fw-semibold">Category</label>
+          <select id="category" class="form-select" formControlName="category"><option value="" disabled>Choose a category</option>@for (item of categories; track item) { <option [value]="item">{{ item }}</option> }</select>
+          @if (form.controls.category.invalid && form.controls.category.touched) { <div class="text-danger small mt-1">Choose a category.</div> }
+        </div>
+        <div class="mb-3">
+          <label for="date" class="form-label fw-semibold">Date</label><input id="date" class="form-control" type="date" formControlName="date">
+          @if (form.controls.date.invalid && form.controls.date.touched) { <div class="text-danger small mt-1">{{ form.controls.date.hasError('futureDate') ? 'Date cannot be in the future.' : 'Choose a date.' }}</div> }
+        </div>
+        <div class="mb-4">
+          <label for="note" class="form-label fw-semibold">Note <span class="text-secondary fw-normal">(optional)</span></label><textarea id="note" class="form-control" rows="3" maxlength="200" formControlName="note" placeholder="What was this expense for?"></textarea>
+          @if (form.controls.note.invalid && form.controls.note.touched) { <div class="text-danger small mt-1">Note must be 200 characters or fewer.</div> }
+        </div>
+        <div class="d-flex gap-2"><button class="btn btn-primary px-4" type="submit" [disabled]="form.invalid || saving()">{{ editingId() === null ? 'Add Expense' : 'Update Expense' }}</button><a class="btn btn-outline-secondary" routerLink="/expenses">Cancel</a></div>
+      </div>
+    </form>
+  </div>
+</div>

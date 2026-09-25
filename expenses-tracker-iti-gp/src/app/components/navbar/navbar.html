@@ -1,0 +1,17 @@
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold" routerLink="/">
+      <span class="text-info">Ledger</span>ly
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+        <a class="nav-link" routerLink="/add" routerLinkActive="active">Add Expense</a>
+        <a class="nav-link" routerLink="/expenses" routerLinkActive="active">View Expenses</a>
+      </div>
+    </div>
+  </div>
+</nav>

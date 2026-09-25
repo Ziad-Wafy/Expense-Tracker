@@ -1,0 +1,18 @@
+<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+  <div><span class="text-primary fw-semibold small text-uppercase">Your ledger</span><h1 class="h2 fw-bold mb-0 mt-1">Expenses</h1></div>
+  <a class="btn btn-primary rounded-pill" routerLink="/add">+ Add expense</a>
+</div>
+<div class="card border-0 shadow-sm rounded-4 mb-4"><div class="card-body">
+  <div class="row g-3">
+    <div class="col-md-4"><label class="form-label small text-secondary">Category</label><select class="form-select" [value]="category()" (change)="category.set($any($event.target).value)"><option>All</option>@for (item of categories; track item) { <option>{{ item }}</option> }</select></div>
+    <div class="col-md-4"><label class="form-label small text-secondary">Search notes</label><input class="form-control" placeholder="Search by note..." [value]="search()" (input)="search.set($any($event.target).value)"></div>
+    <div class="col-md-2"><label class="form-label small text-secondary">Sort by</label><select class="form-select" [value]="sortBy()" (change)="sortBy.set($any($event.target).value)"><option value="date">Date</option><option value="amount">Amount</option></select></div>
+    <div class="col-md-2"><label class="form-label small text-secondary">Direction</label><select class="form-select" [value]="sortDir()" (change)="sortDir.set($any($event.target).value)"><option value="desc">Newest / high</option><option value="asc">Oldest / low</option></select></div>
+  </div>
+</div></div>
+<div class="d-flex justify-content-between align-items-center mb-3"><span class="text-secondary">Showing {{ filteredExpenses().length }} expense(s)</span><strong class="fs-5">Visible total: {{ visibleTotal() | currency }}</strong></div>
+@if (filteredExpenses().length > 0) {
+  <div class="table-responsive card border-0 shadow-sm rounded-4"><table class="table table-hover align-middle mb-0"><thead class="table-light"><tr><th>Category</th><th>Amount</th><th>Date</th><th>Note</th><th class="text-end">Actions</th></tr></thead><tbody>
+    @for (expense of filteredExpenses(); track expense.id) { <tr [appHighlightOverBudget]="expense.amount"><td class="fw-semibold">{{ expense.category | categoryIcon }}</td><td>{{ expense.amount | currency }}</td><td>{{ expense.date | date:'mediumDate' }}</td><td class="text-secondary">{{ expense.note || '—' }}</td><td class="text-end"><button class="btn btn-sm btn-outline-primary me-2" (click)="edit(expense.id)">Edit</button><button class="btn btn-sm btn-outline-danger" (click)="delete(expense.id)">Delete</button></td></tr> }
+  </tbody></table></div>
+} @else { <div class="text-center bg-white rounded-4 shadow-sm p-5"><div class="display-4 mb-3">🧾</div><h2 class="h4">No expenses found</h2><p class="text-secondary">Try changing your filters or add your first expense.</p><a routerLink="/add" class="btn btn-primary">Add an expense</a></div> }
