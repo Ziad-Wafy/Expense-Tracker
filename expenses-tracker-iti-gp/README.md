@@ -4,15 +4,23 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 ## Development server
 
-To start a local development server, run:
+Create a Groq API key, copy `.env.example` to `.env`, and add the key to `GROQ_API_KEY`:
+
+```bash
+cp .env.example .env
+```
+
+Set `GROQ_API_KEY` in `.env`, then start the app and its private local API together:
 
 ```bash
 npm start
 ```
 
-Once the server is running, open `http://localhost:4200/`. Expenses are stored in the browser, so adding, editing, and deleting expenses works with `ng serve --open` and does not require another API process. Data remains available after reloads and the device returning from sleep mode.
+Open `http://localhost:4200/`. The chat uses Groq's `openai/gpt-oss-20b` model through a local server; the key is never sent to the browser. Do not commit `.env`. If the API key is missing or invalid, the chat shows an error instead of a fake response.
 
-The `npm start` command is also available for the standard Angular development workflow.
+If you prefer to run `ng serve --open`, start the chatbot API in a second terminal from this project folder with `npm run api` and keep that terminal running. The `.env` file must be present before starting the API. The UI reports separately when the API is stopped or the Groq key is missing.
+
+Expenses are stored in the browser, so adding, editing, and deleting expenses continues to work without a separate database and data remains available after reloads or the device returning from sleep mode.
 
 ## Code scaffolding
 
